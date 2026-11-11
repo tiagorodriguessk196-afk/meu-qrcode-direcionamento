@@ -3,13 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Redirecionando...</title>
-    <meta http-equiv="refresh" content="0;url=https://brutusburguer.menuintegrado.com.br/">
+    <meta http-equiv="refresh" content="0;url=https://seu-usuario.github.io/seu-repositorio/">
     <script>
-        // Redirecionamento instantâneo via JavaScript caso a meta tag falhe
-        window.location.replace("https://brutusburguer.menuintegrado.com.br/");
+        // Captura os parâmetros da URL (ex: ?cliente=brutus)
+        const urlParams = new URLSearchParams(window.location.search);
+        const clienteId = urlParams.get('cliente');
+
+        // Mapeamento dos clientes: ID curto do QR Code -> Link final do cardápio/sistema do cliente
+        const rotas = {
+            'brutus': 'https://brutusburguer.menuintegrado.com.br/',
+            'pizzaria-do-ze':
+
+'https://espacocheiadegraca.com.br/'
+
+            // Adicione novos clientes aqui conforme fechar novas vendas!
+        };
+
+        // Executa o redirecionamento se o cliente existir na lista
+        if (clienteId && rotas[clienteId]) {
+            window.location.replace(rotas[clienteId]);
+        } else {
+            // Fallback caso alguém acesse o link raiz sem parâmetros
+            document.write("<h3>Link inválido ou estabelecimento não encontrado.</h3>");
+        }
     </script>
 </head>
 <body>
-    <p>Se você não for redirecionado automaticamente, <a href="https://brutusburguer.menuintegrado.com.br/">clique aqui</a>.</p>
+    <p>Se você não for redirecionado automaticamente, <a id="link-fallback" href="#">clique aqui</a>.</p>
+    <script>
+        // Atualiza o link de fallback dinamicamente caso o redirecionamento automático falhe
+        if (clienteId && rotas[clienteId]) {
+            document.getElementById('link-fallback').href = rotas[clienteId];
+            window.location.replace(rotas[clienteId]);
+        }
+    </script>
 </body>
 </html>
